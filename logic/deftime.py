@@ -1,4 +1,5 @@
 import logging
+from random import randrange
 
 from todoist_service.consts import TaskFields, Due
 from todoist_service.todoist_wrapper.todoist_wrapper import TodoistWrapper
@@ -7,7 +8,10 @@ STRIKE = "\u0336"
 
 
 def get_time(task_time: str):
-    return task_time + "T08:00:00"
+    hour = 8 + randrange(0, 4)
+    if hour < 10:
+        hour = "0%s" % hour
+    return task_time + "T%s:00:00" % hour
 
 
 def has_time(task_time: str):
