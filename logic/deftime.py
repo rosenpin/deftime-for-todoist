@@ -20,7 +20,7 @@ class TimeSetter:
 
     def set_time(self, task):
         title = task[TaskFields.Title]
-        task_date = task[Due.Date]
+        task_date = task[TaskFields.Due]
         if task_date is None:
             logging.info("skipping %s. doesn't have due date" % task_date)
             return

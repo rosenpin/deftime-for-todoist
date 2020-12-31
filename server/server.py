@@ -97,10 +97,5 @@ def favicon():
     return send_file(FAVICON)
 
 
-@app.route("/calendar-option.png")
-def calendar_option():
-    return send_file(CALENDAR_OPTION_IMG)
-
-
 def run_server():
     app.run(port=SERVER_PORT, debug=DEBUG)
