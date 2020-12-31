@@ -7,7 +7,7 @@ STRIKE = "\u0336"
 
 
 def get_time(task_time: str):
-    return task_time + "T8:00:00"
+    return task_time + "T08:00:00"
 
 
 def has_time(task_time: str):
