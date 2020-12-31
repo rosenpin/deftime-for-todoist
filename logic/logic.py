@@ -9,13 +9,11 @@ from logic.deftime import TimeSetter
 class Logic:
     def __init__(self, doist: TodoistWrapper):
         self.doist = doist
-        self.striker = TimeSetter(doist=doist)
+        self.timesetter = TimeSetter(doist=doist)
 
     def __handle_task(self, task: Item, checked: int):
-        if checked == 1:
-            self.striker.strike(task=task)
         if checked == 0:
-            self.striker.unstrike(task=task)
+            self.timesetter.set_time(task=task)
 
     def run_specific_task(self, task_id, checked):
         logging.info("running for specific task {task_id}".format(task_id=task_id))

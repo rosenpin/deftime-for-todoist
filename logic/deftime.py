@@ -1,9 +1,18 @@
 import logging
 
-from todoist_service.consts import TaskFields
+from todoist_service.consts import TaskFields, Due
 from todoist_service.todoist_wrapper.todoist_wrapper import TodoistWrapper
 
 STRIKE = "\u0336"
+
+
+def get_time(task_time: str):
+    return task_time + "T8:00:00"
+
+
+def has_time(task_time: str):
+    return ":" in task_time
+
 
 class TimeSetter:
     def __init__(self, doist: TodoistWrapper):
@@ -11,11 +20,17 @@ class TimeSetter:
 
     def set_time(self, task):
         title = task[TaskFields.Title]
-        if already_annotated(title=title):
-            logging.info("skipping %s. already annotated" % title)
+        task_date = task[Due.Date]
+        if task_date is None:
+            logging.info("skipping %s. doesn't have due date" % task_date)
             return
 
-        new_title = strike_text(title)
-        logging.info("set {title} to {new_title}".format(title=title, new_title=new_title))
-        task.update(content=new_title)
+        task_time = task_date[Due.Date]
+        if has_time(task_time=task_time):
+            logging.info("skipping %s. already has time" % task_time)
+            return
+
+        new_task_time = get_time(task_time=task_time)
+        logging.info("set {title} to {task_time}".format(title=title, task_time=new_task_time))
+        task.update(due={'date': new_task_time})
         self.doist.commit()
