@@ -8,7 +8,8 @@ STRIKE = "\u0336"
 
 
 def get_time(task_time: str):
-    hour = 8 + randrange(0, 4)
+    # between 8 am to 6 pm, reasonable time for TODOs
+    hour = 8 + randrange(0, 10)
     if hour < 10:
         hour = "0%s" % hour
     return task_time + "T%s:00:00" % hour
