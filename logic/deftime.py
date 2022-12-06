@@ -30,7 +30,7 @@ class TimeSetter:
             logging.info("skipping %s. doesn't have due date" % task_date)
             return
 
-        task_time = task_date[Due.Date]
+        task_time = task_date.date
         if has_time(task_time=task_time):
             logging.info("skipping %s. already has time" % task_time)
             return
