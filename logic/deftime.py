@@ -24,8 +24,8 @@ class TimeSetter:
         self.doist = doist
 
     def set_time(self, task):
-        title = task[TaskFields.Title]
-        task_date = task[TaskFields.Due]
+        title = task.content
+        task_date = task.due
         if task_date is None:
             logging.info("skipping %s. doesn't have due date" % task_date)
             return
@@ -37,5 +37,5 @@ class TimeSetter:
 
         new_task_time = get_time(task_time=task_time)
         logging.info("set {title} to {task_time}".format(title=title, task_time=new_task_time))
-        task.update(due={'date': new_task_time})
+        self.doist.update_task(task.id, due={'date': new_task_time})
         self.doist.commit()
