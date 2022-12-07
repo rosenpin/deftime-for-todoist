@@ -1,6 +1,7 @@
 import logging
 from random import randrange
 
+from todoist_api_python.models import Task
 from todoist_service.consts import TaskFields, Due
 from todoist_service.todoist_wrapper.todoist_wrapper import TodoistWrapper
 
@@ -23,14 +24,14 @@ class TimeSetter:
     def __init__(self, doist: TodoistWrapper):
         self.doist = doist
 
-    def set_time(self, task):
+    def set_time(self, task: Task):
         title = task.content
         task_date = task.due
         if task_date is None:
             logging.info("skipping %s. doesn't have due date" % task_date)
             return
 
-        task_time = task_date.date
+        task_time = task_date.datetime
         if has_time(task_time=task_time):
             logging.info("skipping %s. already has time" % task_time)
             return
