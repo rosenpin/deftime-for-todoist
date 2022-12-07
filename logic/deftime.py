@@ -37,5 +37,5 @@ class TimeSetter:
 
         new_task_time = get_time(task_time=task_time)
         logging.info("set {title} to {task_time}".format(title=title, task_time=new_task_time))
-        self.doist.update_task(task.id, due={'date': new_task_time})
+        self.doist.update_task(task.id, due_datetime=new_task_time)
         self.doist.commit()
