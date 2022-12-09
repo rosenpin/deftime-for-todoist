@@ -2,7 +2,7 @@ import logging
 from random import randrange
 
 from todoist_api_python.models import Task
-from todoist_service.consts import TaskFields, Due
+from todoist_service.todoist_wrapper.todoist_api_wrapper import TodoistAPIWrapper
 from todoist_service.todoist_wrapper.todoist_wrapper import TodoistWrapper
 
 STRIKE = "\u0336"
@@ -26,17 +26,20 @@ class TimeSetter:
 
     def set_time(self, task: Task):
         title = task.content
-        task_date = task.due
-        if task_date is None:
-            logging.info("skipping %s. doesn't have due date" % task_date)
+        task_due = task.due
+        if task_due is None:
+            logging.info("skipping %s. doesn't have due date" % task_due)
             return
 
-        task_time = task_date.string
-        if has_time(task_time=task_time):
-            logging.info("skipping %s. already has time" % task_time)
+        task_date = task_due.date
+        if task_due is None:
+            logging.info("skipping %s. doesn't have due date" % task_due)
             return
 
-        new_task_time = get_time(task_time=task_time)
+        if has_time(task_time=task_date):
+            logging.info("skipping %s. already has time" % task_date)
+            return
+
+        new_task_time = get_time(task_time=task_date)
         logging.info("set {title} to {task_time}".format(title=title, task_time=new_task_time))
         self.doist.update_task(task.id, due_datetime=new_task_time)
-        self.doist.commit()

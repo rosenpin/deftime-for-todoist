@@ -1,6 +1,7 @@
 import logging
 
 from todoist.models import Item
+from todoist_api_python.models import Task
 from todoist_service.todoist_wrapper.todoist_wrapper import TodoistWrapper
 
 from logic.deftime import TimeSetter
@@ -11,7 +12,7 @@ class Logic:
         self.doist = doist
         self.timesetter = TimeSetter(doist=doist)
 
-    def __handle_task(self, task: Item, checked: int):
+    def __handle_task(self, task: Task, checked: int):
         if checked == 0:
             self.timesetter.set_time(task=task)
 
