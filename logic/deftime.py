@@ -12,7 +12,7 @@ def get_time(task_time: str):
     hour = 8 + randrange(0, 10)
     if hour < 10:
         hour = "0%s" % hour
-    return {"date": task_time + "T%s:00:00..000000" % hour}
+    return {"date": task_time + "T%s:00:00.000000" % hour}
 
 
 def has_time(task_time: str):
