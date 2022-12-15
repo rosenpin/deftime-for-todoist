@@ -27,6 +27,7 @@ class TimeSetter:
     def set_time(self, task: Task):
         title = task.content
         task_due = task.due
+        logging.info("got task due: %s", task_due)
         if task_due is None:
             logging.info("skipping %s. doesn't have due date" % task_due)
             return
