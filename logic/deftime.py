@@ -2,7 +2,6 @@ import logging
 from random import randrange
 
 from todoist_api_python.models import Task
-from todoist_service.todoist_wrapper.todoist_api_wrapper import TodoistAPIWrapper
 from todoist_service.todoist_wrapper.todoist_wrapper import TodoistWrapper
 
 STRIKE = "\u0336"
@@ -13,7 +12,7 @@ def get_time(task_time: str):
     hour = 8 + randrange(0, 10)
     if hour < 10:
         hour = "0%s" % hour
-    return task_time + "T%s:00:00" % hour
+    return {"date": task_time + "T%s:00:00..000000" % hour}
 
 
 def has_time(task_time: str):
@@ -40,6 +39,9 @@ class TimeSetter:
             logging.info("skipping %s. already has time" % task_date)
             return
 
-        new_task_time = get_time(task_time=task_date)
-        logging.info("set {title} to {task_time}".format(title=title, task_time=new_task_time))
-        self.doist.update_task(task.id, due_datetime=new_task_time)
+        try:
+            new_task_time = get_time(task_time=task_date)
+            logging.info("set {title} to {task_time}".format(title=title, task_time=new_task_time))
+            self.doist.update_task(task.id, due=new_task_time)
+        except BaseException as e:
+            logging.error("got error %s" % e)

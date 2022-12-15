@@ -13,7 +13,7 @@ class Logic:
         self.timesetter = TimeSetter(doist=doist)
 
     def __handle_task(self, task: Task, checked: int):
-        if checked == 0:
+        if checked == 0 or checked is False:
             self.timesetter.set_time(task=task)
 
     def run_specific_task(self, task_id, checked):
