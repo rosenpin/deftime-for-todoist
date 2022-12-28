@@ -1,6 +1,5 @@
 import logging
 
-from todoist.models import Item
 from todoist_api_python.models import Task
 from todoist_service.todoist_wrapper.todoist_wrapper import TodoistWrapper
 
