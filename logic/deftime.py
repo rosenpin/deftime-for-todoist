@@ -37,7 +37,7 @@ class TimeSetter:
             logging.info("skipping %s. doesn't have due date" % task_due)
             return
 
-        if has_time(task_time=task_date):
+        if has_time(task_time=task_due.datetime):
             logging.info("skipping %s. already has time" % task_date)
             return
 
