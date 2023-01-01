@@ -37,13 +37,17 @@ class TimeSetter:
             logging.info("skipping %s. doesn't have due date" % task_due)
             return
 
-        if has_time(task_time=task_due.datetime):
+        if task_due.datetime is not None and has_time(task_time=task_due.datetime):
             logging.info("skipping %s. already has time" % task_date)
             return
 
         try:
             new_task_time = get_time(task_time=task_date)
-            logging.info("set {title} to {task_time}".format(title=title, task_time=new_task_time))
+            logging.info(
+                "set {title} to {task_time}".format(
+                    title=title, task_time=new_task_time
+                )
+            )
             self.doist.update_task(task.id, due_date=new_task_time)
         except BaseException as e:
             logging.error("got error %s" % e)
