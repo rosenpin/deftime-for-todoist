@@ -1,5 +1,7 @@
 import logging
 from random import randrange
+import datetime
+import pytz
 
 from todoist_api_python.models import Task, Due
 from todoist_service.todoist_wrapper.todoist_wrapper import TodoistWrapper
@@ -8,8 +10,21 @@ STRIKE = "\u0336"
 
 
 def get_time(task_time: str):
-    # between 8 am to 6 pm, reasonable time for TODOs
-    hour = 8 + randrange(0, 10)
+    current = datetime.datetime.now(pytz.timezone("Asia/Jerusalem"))
+    current_date = "{year}-{month}-{day}".format(
+        year=current.year, month=current.month, day=current.day
+    )
+    print(
+        "current date {current} and got date {task_time}".format(
+            current=current, task_time=task_time
+        )
+    )
+    if current_date == task_time:
+        hour = current.hour + randrange(0, 24 - current.hour)
+    else:
+        # between 8 am to 6 pm, reasonable time for TODOs
+        hour = 8 + randrange(0, 10)
+
     if hour < 10:
         hour = "0%s" % hour
     desired_date_time = task_time + "T%s:00:00.000000" % hour
