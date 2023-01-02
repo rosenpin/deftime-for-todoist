@@ -14,12 +14,13 @@ def get_time(task_time: str):
     current_date = "{year}-{month}-{day}".format(
         year=current.year, month=current.month, day=current.day
     )
-    print(
+    logging.info(
         "current date {current} and got date {task_time}".format(
-            current=current, task_time=task_time
+            current=current_date, task_time=task_time
         )
     )
     if current_date == task_time:
+        logging.info("using current date since it's today: %s" % current.hour)
         hour = current.hour + randrange(0, 24 - current.hour)
     else:
         # between 8 am to 6 pm, reasonable time for TODOs
